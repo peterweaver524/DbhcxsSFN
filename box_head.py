@@ -4,15 +4,12 @@
 #  you may not use this file except in compliance with the License.
 #  You may obtain a copy of the License at
 #
-#      http://www.apache.org/licenses/LICENSE-2.0
-#
 #  Unless required by applicable law or agreed to in writing, software
 #  distributed under the License is distributed on an "AS IS" BASIS,
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-from typing import Tuple
 
 from aitemplate.compiler import ops
 from aitemplate.frontend import nn
@@ -55,7 +52,6 @@ class FastRCNNConvFCHead(nn.Module):
     def forward(self, feat, rois):
         roi_feat = self.roi_align(feat[0], feat[1], feat[2], feat[3], rois)
         roi_feat = ops.reshape()(roi_feat, [ops.size()(roi_feat, 0), -1])
-        fc1 = self.fc1(roi_feat)
         fc2 = self.fc2(fc1)
         return fc2
 
